@@ -1,19 +1,24 @@
 import React from "react";
 import SearchBar from "./SearchBar";
 
-const PGGrid = () => {
-  const pgData = [
+const PGCarousel = () => {
+  const pgListings = [
     {
       id: 1,
       type: "Girls",
       exclusive: true,
       verified: true,
       name: "Sandhya Luxury Womens Pg",
-      location: "Madhura Nagar Colony, Gachibowli, Hyderabad, Telangana, India",
+      location: "Madhura Nagar, Gachibowli, Hyderabad, Telangana, India",
+      locationVerified: true,
       distance: "12.03 KMS",
       price: "₹7000/Month",
+      priceRange: "₹5000 - ₹8000",
+      ac: true,
+      nonAc: false,
       amenities: ["CCTV", "Security", "Food", "Laundry", "Furniture"],
-      image: "./first.jpg", 
+      freeAmenities: ["WiFi", "Parking", "Hot Water"],
+      image: "./first.jpg",
     },
     {
       id: 2,
@@ -21,10 +26,15 @@ const PGGrid = () => {
       exclusive: true,
       verified: true,
       name: "Srinivasa Luxury Womens Pg",
-      location: "Madhura Nagar Colony, Gachibowli, Hyderabad, Telangana, India",
-      distance: "12.03 KMS",
+      location: "Kondapur, Hyderabad, Telangana, India",
+      locationVerified: true,
+      distance: "10.45 KMS",
       price: "₹6500/Month",
+      priceRange: "₹5000 - ₹8000",
+      ac: false,
+      nonAc: true,
       amenities: ["CCTV", "Security", "Food", "Laundry", "Furniture"],
+      freeAmenities: ["WiFi", "Parking"],
       image: "/second.jpg",
     },
     {
@@ -33,47 +43,107 @@ const PGGrid = () => {
       exclusive: true,
       verified: true,
       name: "AR LUXURY PG",
-      location: "Madhura Nagar Colony, Gachibowli, Hyderabad, Telangana, India",
-      distance: "12.03 KMS",
+      location: "Madhapur, Hyderabad, Telangana, India",
+      locationVerified: true,
+      distance: "8.90 KMS",
       price: "₹8000/Month",
+      priceRange: "₹8000 - ₹10000",
+      ac: true,
+      nonAc: false,
       amenities: ["CCTV", "Security", "Food", "Laundry", "Furniture"],
+      freeAmenities: ["WiFi", "Parking", "Gym"],
       image: "/third.jpg",
     },
     {
-      id: 1,
-      type: "Girls",
-      exclusive: true,
+      id: 4,
+      type: "Boys",
+      exclusive: false,
       verified: true,
-      name: "Sandhya Luxury Womens Pg",
-      location: "Madhura Nagar Colony, Gachibowli, Hyderabad, Telangana, India",
-      distance: "12.03 KMS",
-      price: "₹7000/Month",
-      amenities: ["CCTV", "Security", "Food", "Laundry", "Furniture"],
-      image: "/fourth.jpg", // Replace with actual image
+      name: "Green Nest Boys PG",
+      location: "Hitech City, Hyderabad, Telangana, India",
+      locationVerified: true,
+      distance: "9.50 KMS",
+      price: "₹7500/Month",
+      priceRange: "₹7000 - ₹9000",
+      ac: true,
+      nonAc: false,
+      amenities: ["CCTV", "Security", "Food", "Laundry", "Gym"],
+      freeAmenities: ["WiFi", "Parking", "Hot Water"],
+      image: "/fourth.jpg",
     },
     {
-      id: 2,
+      id: 5,
       type: "Girls",
       exclusive: true,
       verified: true,
-      name: "Srinivasa Luxury Womens Pg",
-      location: "Madhura Nagar Colony, Gachibowli, Hyderabad, Telangana, India",
-      distance: "12.03 KMS",
-      price: "₹6500/Month",
-      amenities: ["CCTV", "Security", "Food", "Laundry", "Furniture"],
+      name: "Sunshine Ladies PG",
+      location: "Banjara Hills, Hyderabad, Telangana, India",
+      locationVerified: true,
+      distance: "7.80 KMS",
+      price: "₹8500/Month",
+      priceRange: "₹8000 - ₹10000",
+      ac: true,
+      nonAc: false,
+      amenities: ["CCTV", "Security", "Food", "Laundry", "TV"],
+      freeAmenities: ["WiFi", "Parking", "Hot Water"],
       image: "/fifth.jpg",
     },
     {
-      id: 3,
+      id: 6,
       type: "Boys",
-      exclusive: true,
-      verified: true,
-      name: "AR LUXURY PG",
-      location: "Madhura Nagar Colony, Gachibowli, Hyderabad, Telangana, India",
-      distance: "12.03 KMS",
-      price: "₹8000/Month",
+      exclusive: false,
+      verified: false,
+      name: "Cozy Stay PG for Boys",
+      location: "Ameerpet, Hyderabad, Telangana, India",
+      locationVerified: true,
+      distance: "11.20 KMS",
+      price: "₹6000/Month",
+      priceRange: "₹5000 - ₹7000",
+      ac: false,
+      nonAc: true,
       amenities: ["CCTV", "Security", "Food", "Laundry", "Furniture"],
+      freeAmenities: ["WiFi", "Parking"],
       image: "/sixth.jpg",
+    },
+
+    {
+      id: 7,
+      name: "Sunrise PG",
+      location: "Bangalore, Indiranagar",
+      type: "Boys",
+      price: "₹8000 - ₹12000",
+      amenities: ["WiFi", "Parking", "Food", "Laundry"],
+      verified: true,
+      acAvailable: true,
+      nonAcAvailable: false,
+      image: "/seventh.jpg",
+
+    },
+    {
+      id: 8,
+      name: "Cozy Nest PG",
+      location: "Hyderabad, Madhapur",
+      type: "Girls",
+      price: "₹6000 - ₹10000",
+      amenities: ["WiFi", "Security", "Power Backup"],
+      verified: false,
+      acAvailable: false,
+      nonAcAvailable: true,
+      image: "/first.jpg",
+
+    },
+    {
+      id: 9,
+      name: "Elite Stay PG",
+      location: "Pune, Hinjewadi",
+      type: "Unisex",
+      price: "₹9000 - ₹15000",
+      amenities: ["WiFi", "Gym", "CCTV", "Food"],
+      verified: true,
+      acAvailable: true,
+      nonAcAvailable: true,
+      image: "/fourth.jpg",
+
     },
   ];
 
@@ -82,7 +152,7 @@ const PGGrid = () => {
       <SearchBar />
       <div className="p-6 bg-gray-100">
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-          {pgData.map((pg) => (
+          {pgListings.map((pg) => (
             <div
               key={pg.id}
               className="bg-white rounded-lg shadow-lg overflow-hidden transition-all duration-300 hover:shadow-2xl hover:scale-105 group"
@@ -139,4 +209,4 @@ const PGGrid = () => {
   );
 };
 
-export default PGGrid;
+export default PGCarousel;

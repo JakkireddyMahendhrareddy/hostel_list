@@ -117,7 +117,6 @@ const PGCarousel = () => {
       acAvailable: true,
       nonAcAvailable: false,
       image: "/seventh.jpg",
-
     },
     {
       id: 8,
@@ -130,7 +129,6 @@ const PGCarousel = () => {
       acAvailable: false,
       nonAcAvailable: true,
       image: "/first.jpg",
-
     },
     {
       id: 9,
@@ -143,7 +141,6 @@ const PGCarousel = () => {
       acAvailable: true,
       nonAcAvailable: true,
       image: "/fourth.jpg",
-
     },
   ];
 

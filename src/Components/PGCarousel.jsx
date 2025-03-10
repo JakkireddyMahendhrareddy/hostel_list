@@ -1,155 +1,62 @@
 import React from "react";
 import SearchBar from "./SearchBar";
 
-const PGCarousel = () => {
-  const pgListings = [
-    {
-      id: 1,
-      type: "Girls",
-      exclusive: true,
-      verified: true,
-      name: "Sandhya Luxury Womens Pg",
-      location: "Madhura Nagar, Gachibowli, Hyderabad, Telangana, India",
-      locationVerified: true,
-      distance: "12.03 KMS",
-      price: "₹7000/Month",
-      priceRange: "₹5000 - ₹8000",
-      ac: true,
-      nonAc: false,
-      amenities: ["CCTV", "Security", "Food", "Laundry", "Furniture"],
-      freeAmenities: ["WiFi", "Parking", "Hot Water"],
-      image: "./first.jpg",
-    },
-    {
-      id: 2,
-      type: "Girls",
-      exclusive: true,
-      verified: true,
-      name: "Srinivasa Luxury Womens Pg",
-      location: "Kondapur, Hyderabad, Telangana, India",
-      locationVerified: true,
-      distance: "10.45 KMS",
-      price: "₹6500/Month",
-      priceRange: "₹5000 - ₹8000",
-      ac: false,
-      nonAc: true,
-      amenities: ["CCTV", "Security", "Food", "Laundry", "Furniture"],
-      freeAmenities: ["WiFi", "Parking"],
-      image: "/second.jpg",
-    },
-    {
-      id: 3,
-      type: "Boys",
-      exclusive: true,
-      verified: true,
-      name: "AR LUXURY PG",
-      location: "Madhapur, Hyderabad, Telangana, India",
-      locationVerified: true,
-      distance: "8.90 KMS",
-      price: "₹8000/Month",
-      priceRange: "₹8000 - ₹10000",
-      ac: true,
-      nonAc: false,
-      amenities: ["CCTV", "Security", "Food", "Laundry", "Furniture"],
-      freeAmenities: ["WiFi", "Parking", "Gym"],
-      image: "/third.jpg",
-    },
-    {
-      id: 4,
-      type: "Boys",
-      exclusive: false,
-      verified: true,
-      name: "Green Nest Boys PG",
-      location: "Hitech City, Hyderabad, Telangana, India",
-      locationVerified: true,
-      distance: "9.50 KMS",
-      price: "₹7500/Month",
-      priceRange: "₹7000 - ₹9000",
-      ac: true,
-      nonAc: false,
-      amenities: ["CCTV", "Security", "Food", "Laundry", "Gym"],
-      freeAmenities: ["WiFi", "Parking", "Hot Water"],
-      image: "/fourth.jpg",
-    },
-    {
-      id: 5,
-      type: "Girls",
-      exclusive: true,
-      verified: true,
-      name: "Sunshine Ladies PG",
-      location: "Banjara Hills, Hyderabad, Telangana, India",
-      locationVerified: true,
-      distance: "7.80 KMS",
-      price: "₹8500/Month",
-      priceRange: "₹8000 - ₹10000",
-      ac: true,
-      nonAc: false,
-      amenities: ["CCTV", "Security", "Food", "Laundry", "TV"],
-      freeAmenities: ["WiFi", "Parking", "Hot Water"],
-      image: "/fifth.jpg",
-    },
-    {
-      id: 6,
-      type: "Boys",
-      exclusive: false,
-      verified: false,
-      name: "Cozy Stay PG for Boys",
-      location: "Ameerpet, Hyderabad, Telangana, India",
-      locationVerified: true,
-      distance: "11.20 KMS",
-      price: "₹6000/Month",
-      priceRange: "₹5000 - ₹7000",
-      ac: false,
-      nonAc: true,
-      amenities: ["CCTV", "Security", "Food", "Laundry", "Furniture"],
-      freeAmenities: ["WiFi", "Parking"],
-      image: "/sixth.jpg",
-    },
+import { useState } from "react";
 
-    {
-      id: 7,
-      name: "Sunrise PG",
-      location: "Bangalore, Indiranagar",
-      type: "Boys",
-      price: "₹8000 - ₹12000",
-      amenities: ["WiFi", "Parking", "Food", "Laundry"],
-      verified: true,
-      acAvailable: true,
-      nonAcAvailable: false,
-      image: "/seventh.jpg",
-    },
-    {
-      id: 8,
-      name: "Cozy Nest PG",
-      location: "Hyderabad, Madhapur",
-      type: "Girls",
-      price: "₹6000 - ₹10000",
-      amenities: ["WiFi", "Security", "Power Backup"],
-      verified: false,
-      acAvailable: false,
-      nonAcAvailable: true,
-      image: "/first.jpg",
-    },
-    {
-      id: 9,
-      name: "Elite Stay PG",
-      location: "Pune, Hinjewadi",
-      type: "Unisex",
-      price: "₹9000 - ₹15000",
-      amenities: ["WiFi", "Gym", "CCTV", "Food"],
-      verified: true,
-      acAvailable: true,
-      nonAcAvailable: true,
-      image: "/fourth.jpg",
-    },
-  ];
+const PGCarousel = ({ pgListings }) => {
+  const [filteredPGs, setFilteredPGs] = useState(pgListings);
+  const [isVerified, setIsVerified] = useState(false);
+  const [selectedPriceRange, setSelectedPriceRange] = useState("All");
+
+  const handleFilterChange = (type, ac) => {
+    let filteredData = pgListings;
+
+    if (type !== "All") {
+      filteredData = filteredData.filter((pg) => pg.type === type);
+    }
+
+    if (ac !== "All") {
+      filteredData = filteredData.filter((pg) =>
+        ac === "AC" ? pg.ac === true : pg.ac === false
+      );
+    }
+
+    if (isVerified) {
+      filteredData = filteredData.filter((pg) => pg.verified);
+    }
+
+    if (selectedPriceRange !== "All") {
+      const [min, max] = selectedPriceRange.split("-").map(Number);
+      filteredData = filteredData.filter(
+        (pg) => pg.price >= min && pg.price <= max
+      );
+    }
+
+    setFilteredPGs(filteredData);
+  };
+
+  const handleVerifiedClick = () => {
+    setIsVerified((prev) => !prev);
+    handleFilterChange("All", "All");
+  };
+
+  const handlePriceRangeChange = (event) => {
+    setSelectedPriceRange(event.target.value);
+    handleFilterChange("All", "All");
+  };
 
   return (
     <div>
-      <SearchBar />
+      <SearchBar
+        onFilterChange={handleFilterChange}
+        onVerifiedClick={handleVerifiedClick}
+        selectedPriceRange={selectedPriceRange}
+        onPriceRangeChange={handlePriceRangeChange}
+        isVerified={isVerified}
+      />
       <div className="p-6 bg-gray-100">
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-          {pgListings.map((pg) => (
+          {filteredPGs.map((pg) => (
             <div
               key={pg.id}
               className="bg-white rounded-lg shadow-lg overflow-hidden transition-all duration-300 hover:shadow-2xl hover:scale-105 group"
@@ -170,11 +77,6 @@ const PGCarousel = () => {
                   >
                     {pg.type}
                   </span>
-                  {pg.exclusive && (
-                    <span className="px-2 py-1 text-sm font-bold bg-red-500 text-white rounded">
-                      EXCLUSIVE
-                    </span>
-                  )}
                   {pg.verified && (
                     <span className="px-2 py-1 text-sm font-bold bg-blue-500 text-white rounded">
                       PGO Verified
@@ -187,20 +89,23 @@ const PGCarousel = () => {
                   {pg.distance}
                 </p>
                 <p className="mt-2 text-lg font-bold">{pg.price}</p>
-                <div className="mt-2 flex flex-wrap gap-2">
-                  {pg.amenities.map((amenity, index) => (
-                    <span
-                      key={index}
-                      className="px-2 py-1 text-xs font-semibold bg-gray-200 rounded"
-                    >
-                      {amenity}
-                    </span>
-                  ))}
+                <div className="mt-4">
+                  <button
+                    onClick={() => (window.location.href = `/details/${pg.id}`)}
+                    className="w-full px-4 py-2 bg-blue-600 text-white font-bold rounded hover:bg-blue-700"
+                  >
+                    View Details
+                  </button>
                 </div>
               </div>
             </div>
           ))}
         </div>
+        {filteredPGs.length === 0 && (
+          <p className="text-center text-gray-500 mt-4">
+            No PGs match your filter criteria.
+          </p>
+        )}
       </div>
     </div>
   );

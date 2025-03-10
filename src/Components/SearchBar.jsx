@@ -1,32 +1,48 @@
 import { FaSearch } from "react-icons/fa";
+
 import { useState } from "react";
 
-const amenitiesList = [
-  "Bed & Mattress",
-  "CC Cameras",
-  "Gym",
-  "Hot Water",
-  "Lift",
-  "Mineral Water",
-  "Non-AC",
-  "Parking",
-  "RO Water Purifier",
-  "Safety Lockers",
-  "Self Cooking",
-  "Toilets Attached",
-  "Wardrobes",
-  "Washing Machine",
-  "WiFi",
-];
-
-const SearchBar = () => {
-  const [selectedFilters, setSelectedFilters] = useState({
-    verified: false,
-    acType: "",
-    amenities: [],
-  });
-
+const SearchBar = ({
+  onFilterChange,
+  onVerifiedClick,
+  onPriceSort,
+  isVerified,
+  selectedPriceRange,
+  onPriceRangeChange,
+}) => {
+  const [selectedType, setSelectedType] = useState("All");
+  const [selectedAc, setSelectedAc] = useState("All");
   const [showAmenities, setShowAmenities] = useState(false);
+  const [selectedFilters, setSelectedFilters] = useState({ amenities: [] });
+
+  // Define amenities list
+  const amenitiesList = [
+    "Bed & Mattress",
+    "CC Cameras",
+    "Gym",
+    "Hot Water",
+    "Lift",
+    "Mineral Water",
+    "Non-AC",
+    "Parking",
+    "RO Water Purifier",
+    "Safety Lockers",
+    "Self Cooking",
+    "Toilets Attached",
+    "Wardrobes",
+    "Washing Machine",
+    "WiFi",
+  ];
+
+  const handleTypeChange = (event) => {
+    setSelectedType(event.target.value);
+    onFilterChange(event.target.value, selectedAc);
+  };
+
+  const handleAcChange = (event) => {
+    setSelectedAc(event.target.value);
+    onFilterChange(selectedType, event.target.value);
+  };
 
   const toggleAmenity = (amenity) => {
     setSelectedFilters((prev) => {
@@ -37,13 +53,8 @@ const SearchBar = () => {
     });
   };
 
-  const handleAcChange = (e) => {
-    setSelectedFilters((prev) => ({ ...prev, acType: e.target.value }));
-  };
-
   return (
     <div className="bg-blue-100 p-3 flex flex-wrap gap-2 items-center rounded-lg">
-      {/* Search Input */}
       <div className="relative w-40">
         <input
           type="text"
@@ -63,47 +74,48 @@ const SearchBar = () => {
         <FaSearch className="absolute left-2.5 top-2 text-blue-600 text-sm" />
       </div>
 
-      {/* Type Dropdown */}
-      <select className="px-3 py-1.5 bg-white border rounded-full text-gray-700 font-medium focus:ring-2 focus:ring-blue-400 focus:outline-none">
-        <option>All</option>
-        <option>Boys</option>
-        <option>Girls</option>
+      <select
+        className="px-3 py-1.5 bg-white border rounded-full text-gray-700 font-medium focus:ring-2 focus:ring-blue-400 focus:outline-none"
+        value={selectedType}
+        onChange={handleTypeChange}
+      >
+        <option value="All">All</option>
+        <option value="Boys">Boys</option>
+        <option value="Girls">Girls</option>
       </select>
 
-      {/* Verified Button */}
+      <select
+        className="px-3 py-1.5 bg-white border rounded-full text-gray-700 font-medium focus:ring-2 focus:ring-blue-400 focus:outline-none"
+        value={selectedAc}
+        onChange={handleAcChange}
+      >
+        <option value="All">All</option>
+        <option value="AC">AC</option>
+        <option value="Non-AC">Non-AC</option>
+      </select>
+
       <button
         className={`px-3 py-1.5 rounded-full text-sm font-medium border ${
-          selectedFilters.verified ? "bg-blue-600 text-white" : "bg-white"
+          isVerified ? "bg-blue-600 text-white" : "bg-white"
         }`}
-        onClick={() =>
-          setSelectedFilters((prev) => ({ ...prev, verified: !prev.verified }))
-        }
+        onClick={onVerifiedClick}
       >
         Verified
       </button>
 
-      {/* AC Type Dropdown */}
       <select
         className="px-3 py-1.5 bg-white border rounded-full text-gray-700 font-medium focus:ring-2 focus:ring-blue-400 focus:outline-none"
-        value={selectedFilters.acType}
-        onChange={handleAcChange}
+        value={selectedPriceRange}
+        onChange={onPriceRangeChange}
       >
-        <option value="">Select AC Type</option>
-        <option value="ac">AC</option>
-        <option value="nonAc">Non-AC</option>
+        <option value="All">Price</option>
+        <option value="1000-5000">₹1000 - ₹5000</option>
+        <option value="5000-7000">₹5000 - ₹7000</option>
+        <option value="7000-10000">₹7000 - ₹10000</option>
+        <option value="10000-15000">₹10000 - ₹15000</option>
+        <option value="15000-20000">₹15000 - ₹20000</option>
       </select>
 
-      {/* Price Dropdown */}
-      <select className="px-3 py-1.5 bg-white border rounded-full text-gray-700 font-medium focus:ring-2 focus:ring-blue-400 focus:outline-none">
-        <option>Price</option>
-        <option>₹1000 - ₹5000</option>
-        <option>₹5000 - ₹7000</option>
-        <option>₹7000 - ₹10000</option>
-        <option>₹10000 - ₹15000</option>
-        <option>₹15000 - ₹20000</option>
-      </select>
-
-      {/* Amenities Button */}
       <button
         className="px-4 py-2 rounded-full text-sm font-medium border bg-white hover:bg-blue-500 hover:text-white"
         onClick={() => setShowAmenities(!showAmenities)}

@@ -1,6 +1,8 @@
 import React from "react";
 import SearchBar from "./SearchBar";
 
+//Mahi
+
 import { useState } from "react";
 
 const PGCarousel = ({ pgListings }) => {
@@ -54,12 +56,12 @@ const PGCarousel = ({ pgListings }) => {
         onPriceRangeChange={handlePriceRangeChange}
         isVerified={isVerified}
       />
-      <div className="p-6 bg-gray-100">
+      <div className="p-6 bg-gray-50">
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
           {filteredPGs.map((pg) => (
             <div
               key={pg.id}
-              className="bg-white rounded-lg shadow-lg overflow-hidden transition-all duration-300 hover:shadow-2xl hover:scale-105 group"
+              className="bg-white rounded-lg shadow-md overflow-hidden transition-all duration-300 hover:shadow-lg hover:scale-105 group"
             >
               <img
                 src={pg.image}
@@ -69,30 +71,32 @@ const PGCarousel = ({ pgListings }) => {
               <div className="p-4">
                 <div className="flex items-center gap-2">
                   <span
-                    className={`px-2 py-1 text-sm font-bold rounded ${
+                    className={`px-2 py-1 text-sm font-medium rounded ${
                       pg.type === "Girls"
-                        ? "bg-pink-500 text-white"
-                        : "bg-blue-500 text-white"
+                        ? "bg-pink-200 text-pink-700"
+                        : "bg-blue-200 text-blue-700"
                     }`}
                   >
                     {pg.type}
                   </span>
                   {pg.verified && (
-                    <span className="px-2 py-1 text-sm font-bold bg-blue-500 text-white rounded">
+                    <span className="px-2 py-1 text-sm font-medium bg-blue-200 text-blue-700 rounded">
                       PGO Verified
                     </span>
                   )}
                 </div>
-                <h3 className="mt-2 text-lg font-bold">{pg.name}</h3>
+                <h3 className="mt-2 text-lg font-semibold text-gray-800">
+                  {pg.name}
+                </h3>
                 <p className="text-sm text-gray-600">{pg.location}</p>
-                <p className="mt-1 text-gray-700 font-semibold">
-                  {pg.distance}
+                <p className="mt-1 text-gray-700 font-medium">{pg.distance}</p>
+                <p className="mt-2 text-lg font-semibold text-gray-900">
+                  {pg.price}
                 </p>
-                <p className="mt-2 text-lg font-bold">{pg.price}</p>
                 <div className="mt-4">
                   <button
                     onClick={() => (window.location.href = `/details/${pg.id}`)}
-                    className="w-full px-4 py-2 bg-blue-600 text-white font-bold rounded hover:bg-blue-700"
+                    className="w-full px-4 py-2 bg-gray-400 text-white font-medium rounded-lg hover:bg-green-400"
                   >
                     View Details
                   </button>
